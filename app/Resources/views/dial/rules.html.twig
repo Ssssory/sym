@@ -1,0 +1,217 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+<div class="panel-heading"><h2>Правила обзвона</h2></div>
+<div class="row">
+  <div class="col-md-1">
+    <button class="btn btn-default" onclick="location.href='{{ path('dial_list',{'id':dial.id}) }}'">Назад</button>
+  </div>
+</div><br>
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default card-view">
+      <div class="panel-heading">
+      <!--  <div class="pull-left">
+          <h6 class="panel-title txt-dark">multiple open</h6>
+        </div> -->
+        <div class="clearfix"></div>
+      </div>
+      <div class="panel-wrapper collapse in">
+        <div class="panel-body">
+          <div class="panel-group accordion-struct"  role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+              <div class="panel-heading activestate" role="tab" id="heading_5">
+                <a role="button" data-toggle="collapse" href="#collapse_5" aria-expanded="true" >ПОРЯДОК ДЕЙСТВИЙ ПРИ ЗВОНКЕ КЛИЕНТУ</a>
+                 </div><br>
+                   <div id="collapse_5" class="panel-collapse collapse in" role="tabpanel">
+                    <table class='table'>
+                      <thead>
+                        <tr>
+                          <th>Действие</th>
+                          <th>Параметры действия</th>
+                          <th>Порядок</th>
+                          <th>Удаление</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          {% for i in rules %}
+                          <td>{{ i.type|replace({"sound" : "Звуковой файл", "text_to_speech" : "Генерация речи из текста", "number" : "Тональный сигнал"})  }}</td>
+                          {% if  i.type == "sound" %}
+                          <td>
+
+                            <select class='sound_select' data-id='{{ i.id }}' value='{{ i.value }}'>
+                              <option></option>
+                              {% for ii in sounds %}
+                                <option {% if  ii.id == i.value %} selected {% endif %} value='{{ ii.id }}'>{{ ii.name }}</option>
+                              {% endfor %}
+                            </select>
+                          </td>
+                          {% endif %}
+                          {% if  i.type == "text_to_speech" %}
+                            <td><input class='text_to_speech_input' value='{{ i.value }}' data-id='{{ i.id }}'>
+                              <select class='text_to_speech_select'>
+                                <option></option>
+                                <option>{fio}</option>
+                                <option>{adress}</option>
+                                <option>{opt1}</option>
+                                <option>{opt2}</option>
+                                <option>{opt3}</option>
+                              </select>
+                            </td>
+                          {% endif %}
+                          {% if  i.type == "number" %}
+                            <td><input value='{{ i.value }}'></td>
+                          {% endif %}
+                          <td>{{ i.id }}</td>
+                          <td><a href="{{ path('dial_rule_edit',{'id':dial.id, 'item':'delete', 'rule_id':i.id}) }}">Удалить</a></td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                    <div class="button-list mt-25">
+                      <div class="row">
+                        <div class="col-md-1">
+                          <div class="btn-group">
+                            <div class="dropdown">
+                              <button aria-expanded="false" data-toggle="dropdown" class="btn btn-info dropdown-toggle " type="button">Создать правило <span class="caret"></span></button>
+                              <ul role="menu" class="dropdown-menu">
+                                <li><a href="{{ path('dial_rule_edit',{'id':dial.id, 'item':'addSoundToRule'}) }}">Проиграть файл</a></li>
+                                <li><a href="{{ path('dial_rule_edit',{'id':dial.id, 'item':'generateSoundFromText'}) }}">Сгенерировать из текста</a></li>
+                                <li><a href="{{ path('dial_rule_edit',{'id':dial.id, 'item':'processAbonentClickToKey'}) }}">Обработать клик клавиши</a></li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-9"></div>
+                        <div class="col-md-1">
+                          <button class="btn btn-success" onclick="location.href='{{ path('dial_list',{'id':dial.id}) }}'">Сохранить</button>
+                        </div>
+                      </div>
+
+                    </div>
+                  <br>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="heading_6">
+                <a class="collapsed" role="button" data-toggle="collapse" href="#collapse_6" aria-expanded="false" >ДОБАВЛЕНИЕ ЗВУКОВОГО ФАЙЛА</a>
+              </div>
+              <div id="collapse_6" class="panel-collapse collapse" role="tabpanel">
+                <div class="row">
+                    <div class="col-md-10">
+                      <br>
+                        <div class="form-group">
+                        <div class="col-md-10">{{form(form)}}</div>
+                          <!-- <button class="btn btn-success">Добавить wav файл</button> -->
+                          <!-- <button class="btn btn-warning">Добавить правило</button> -->
+                          <!-- <button class="btn btn-danger" >Прослушать файлы</button> -->
+                        </div>
+                        <br>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="heading_7">
+                <a class="collapsed" role="button" data-toggle="collapse"  href="#collapse_7" aria-expanded="false">ПРОСЛУШИВАНИЕ ЗВУКОВЫХ ФАЙЛОВ</a>
+              </div>
+              <div id="collapse_7" class="panel-collapse collapse" role="tabpanel">
+                <div class="row">
+                  <div class="col-md-1"></div>
+                  <div class="col-md-10">
+                    <br>
+                      <table class='table'>
+                        <thead>
+                          <tr>
+                            <th>ID</th>
+                            <th>Название файла</th>
+                            <th>Прослушать</th>
+                            <th>Удалить</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            {% for i in sounds %}
+                            <td>{{ i.id }}</td>
+                            <td>{{ i.name }}</td>
+                            <td><audio src="{{i.path}}" controls></audio></td>
+                            <td><a href="#">Удалить</a></td>
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+$( ".text_to_speech_select" ).change(function() {
+var select = $(this).val();
+$(this).prev().val(select);
+  $('.text_to_speech_select option:selected').each(function(){
+    this.selected=false;
+  });
+});
+</script>
+
+<script>
+function goAjax(){
+  $.ajax({
+    url:"{{ path('dial_rule_edit', {'id':dial.id, 'item':'tttt'}) }}",
+    type:'post',
+    data:{dial: "{{dial.id}}"},
+    success: function(result){
+      var obj = jQuery.parseJSON(result);
+      console.log(obj);
+      if (obj.stop) {
+        alert(obj.stop);
+        return false;
+      }
+    }
+  });
+}
+</script>
+
+<script type="text/javascript">
+$(".sound_select").change(function() {
+  //alert($(this).val());
+  value = $(this).val();
+  rule_id = $(this).attr('data-id');
+  // console.log(value);
+  // console.log(rule_id);
+  $.ajax({
+    url:"{{ path('dial_rule_edit', {'id':dial.id, 'item':'save'}) }}",
+    type:'post',
+    data:{value: value, rule_id: rule_id},
+    success: function(result){}
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(".text_to_speech_select").change(function() {
+  value = $(this).prev().val();
+  rule_id = $(this).prev().attr('data-id');
+  // console.log(value);
+  // console.log(rule_id);
+  $.ajax({
+    url:"{{ path('dial_rule_edit', {'id':dial.id, 'item':'save'}) }}",
+    type:'post',
+    data:{value: value, rule_id: rule_id},
+    success: function(result){}
+  });
+});
+</script>
+
+{% endblock %}
+{% block stylesheets %}
+{% endblock %}

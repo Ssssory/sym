@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="panel-heading"><h1>Автоинформатор</h1></div>
+
+<div class="row">
+  <div class="col-md-10">
+  <h2 class="page-header">Добавить обзвон</h2>
+
+  {{ form_start(form) }}
+  {{ form_widget(form) }}
+  {{ form_end(form) }}
+  </div>
+
+</div>
+
+{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}

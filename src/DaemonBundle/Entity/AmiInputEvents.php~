@@ -1,0 +1,61 @@
+<?php
+
+namespace DaemonBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * AmiInputEvents
+ *
+ * @ORM\Table(name="ami_input_events")
+ * @ORM\Entity
+ */
+class AmiInputEvents
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="uid", type="string", length=50, nullable=false)
+     */
+    private $uid;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="action", type="string", length=150, nullable=false)
+     */
+    private $action;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="date_in", type="string", length=20, nullable=false)
+     */
+    private $dateIn;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="time_in", type="string", length=10, nullable=false)
+     */
+    private $timeIn;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="array", type="text", length=65535, nullable=false)
+     */
+    private $array;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+
+}
+

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="DaemonBundle\Entity\AmiInputEvents" table="ami_input_events">
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="uid" type="string" column="uid" length="50" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">уникальный SessionID для субъекта</option>
+      </options>
+    </field>
+    <field name="action" type="string" column="action" length="150" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">действие Event</option>
+      </options>
+    </field>
+    <field name="dateIn" type="string" column="date_in" length="20" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="timeIn" type="string" column="time_in" length="10" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="array" type="text" column="array" length="65535" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">Весь ответ астериска</option>
+      </options>
+    </field>
+  </entity>
+</doctrine-mapping>

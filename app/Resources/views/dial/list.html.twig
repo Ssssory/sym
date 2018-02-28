@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="panel-heading"><h2>Обзвон {{ dial.name }}</h2></div>
+
+<div class="row">
+  <div class="col-md-1">
+    <button class="btn btn-default" onclick="location.href='{{ url("dial") }}'">Назад</button><br>
+  </div>
+  <div class="col-md-9">
+    <h3>Параметры обзвона</h3>
+    <ul>
+      <li>Название {{ dial.name }}</li>
+      <li>Активность {{ dial.active }}</li>
+      <li>Дата создания {{ dial.dateCreate }}</li>
+      <li>Дата начала обзвона {{ dial.dateStart }}</li>
+      <li>Обзвон стартовал {{ dial.dateCallStart }}</li>
+      <li>Обзвон закончился {{ dial.dateCallEnd }}</li>
+      <li>Комментарий {{ dial.comment }}</li>
+    </ul>
+  </div>
+  <div class="col-md-2">
+    <button class="btn btn-default" onclick="location.href='{{ path('dial_calling',{'id':dial.id}) }}'">Начать обзвон</button><br><br>
+    <button class="btn btn-default" onclick="location.href='{{ path('dial_edit',{'id':dial.id}) }}'">Редактировать обзвон</button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-2"><button class="btn btn-success" onclick="location.href='{{ path('dial_list_add',{'id':dial.id}) }}'">Добавить пользователей</button></div>
+  <div class="col-md-1"></div>
+  <div class="col-md-2"><button class="btn btn-danger" onclick="location.href='{{ path('dial_list_clear',{'id':dial.id}) }}'">Очистить список пользователей</button></div>
+  <div class="col-md-1"></div>
+  <div class="col-md-5">
+      <button class="btn btn-default" onclick="location.href='{{ path('dial_rules',{'id':dial.id}) }}'">Изменить правила обзвона</button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-10">
+    <p>Всего номеров на обзвон: {{users}}</p>
+    <table class='table'>
+      <thead>
+        <tr>
+          <td>ФИО</td>
+          <td>НОМЕР</td>
+          <td>АДРЕС</td>
+          <td>ДАТА СОЗДАНИЯ</td>
+          <td>ОПЦИЯ</td>
+          <td>ОПЦИЯ</td>
+          <td>ОПЦИЯ</td>
+        </tr>
+      </thead>
+          <tr>
+          {% for i in list %}
+          <td>{{ i.fio }}</td>
+          <td>{{ i.phone }}</td>
+          <td>{{ i.addr }}</td>
+          <td>{{ i.date }}</td>
+          <td>{{ i.opt1 }}</td>
+          <td>{{ i.opt2 }}</td>
+          <td>{{ i.opt3 }}</td>
+          </tr>
+      {% endfor %}
+  </div>
+</div>
+
+{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}

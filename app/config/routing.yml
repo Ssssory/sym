@@ -1,0 +1,18 @@
+daemon:
+    resource: "@DaemonBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+auto_dial:
+    resource: "@AutoDialBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+new:
+    resource: "@NewBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation

@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="panel-heading"><h1>Автоинформатор</h1></div>
+
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Название</th>
+          <th>Активность</th>
+          <th>Дата создания</th>
+          <th>Дата начала обзвона</th>
+          <th>Обзвон стартовал</th>
+          <th>Обзвон закончился</th>
+          <th>Комментарий</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for dial in dials %}
+        <tr>
+          <td><a href="{{ canonicl }}/dial/list/{{ dial.id }}">{{ dial.name }}</a></td>
+          <td>{{ dial.active }}</td>
+          <td>{{ dial.dateCreate }}</td>
+          <td>{{ dial.dateStart }}</td>
+          <td>{{ dial.dateCallStart }}</td>
+          <td>{{ dial.dateCallEnd }}</td>
+          <td>{{ dial.comment }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
